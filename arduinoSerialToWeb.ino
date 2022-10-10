@@ -1,7 +1,7 @@
 #include <ResponsiveAnalogRead.h>
 
 
-const int ANALOG_PIN = 0;
+const int ANALOG_PIN = 0; // POTENTIOMETER ON ANALOG PIN A0
 ResponsiveAnalogRead analog(ANALOG_PIN, true);
 
 int rawValue = 0;
@@ -19,11 +19,6 @@ void loop() {
   rawValue = round(analogRead(analog.getRawValue()));
 
   responsiveValue = round(analogRead(analog.getValue()));
-
-
-  // if(analog.hasChanged()) {
-  //   Serial.print("\tchanged");
-  // }
 
   if(rawValue != prevValue){
     prevValue = rawValue;

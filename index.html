@@ -56,7 +56,7 @@
                                         count = dataset.count
                                         dataset.data.push({
                                             x: Date.now(),
-                                            y: inputData[count]
+                                            y: inputData[count] // data added to graph
                                             
                                         });
                                     });
@@ -77,22 +77,8 @@
                 document.getElementById('myChart'),
                 config
                 );
-            
-            
-                
+             
             myChart.update('quiet');
         </script>
-
-        <p id='sample'>sample</p>
-
-
-        <!-- <script>
-            var socket = io();
-            socket.on('data', function(data){
-                console.log(data);
-                document.getElementById('sample').innerHTML = data; 
-            })
-        </script> -->
-
     </body>
 </html>
