@@ -1,0 +1,16 @@
+{
+    "name": "basic-socket",
+    "version": "0.0.1",
+    "description": "Arduino Serial to Web",
+    "dependencies": {
+        "chart.js": "^3.9.1",
+        "chartjs-adapter-luxon": "^1.2.0",
+        "chartjs-plugin-streaming": "^2.0.0",
+        "luxon": "^3.0.4",
+        "node-gyp": "^9.1.0",
+        "python": "0.0.4",
+        "serialport": "^10.4.0",
+        "socket.io": "^4.5.2",
+        "uWebSockets.js": "uNetworking/uWebSockets.js#v20.10.0"
+    }
+}

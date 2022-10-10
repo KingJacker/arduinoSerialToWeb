@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+    </head>
+    <body>
+        <div>
+            <canvas id="myChart" width="100%" height="30%"></canvas>
+        </div>
+
+        <script>
+            var socket = io();
+            socket.on('data', function(data){
+         
+                inputData = data.split('\t');
+            });
+
+            
+            // SETUP
+            const data = {
+                labels: ['Input'],
+                datasets: [{
+                    label: 'Raw Measurement',
+                    data: [],
+                    backgroundColor: 'rgba(75,192,192,0.2)',
+                    borderColor: 'rgba(75,192,192,1)',
+                    broderWidth: 1,
+                    count: 0
+                },{
+                    label: 'Filtered Measurement',
+                    data: [],
+                    backgroundColor: 'rgba(192,75,75,0.2)',
+                    borderColor: 'rgba(192,75,75,1)',
+                    broderWidth: 1,
+                    count: 1
+                }]
+            };
+            // CONFIG
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        x: {
+                            type: 'realtime',
+                            realtime: {
+                                refresh: 100,
+                                duration: 60000,
+                                delay: 100,
+                                onRefresh: chart => {
+                                    chart.data.datasets.forEach(dataset => {
+                                        count = dataset.count
+                                        dataset.data.push({
+                                            x: Date.now(),
+                                            y: inputData[count]
+                                            
+                                        });
+                                    });
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                        
+                    }
+                    
+                }
+            };
+        
+            // RENDER
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+                );
+            
+            
+                
+            myChart.update('quiet');
+        </script>
+
+        <p id='sample'>sample</p>
+
+
+        <!-- <script>
+            var socket = io();
+            socket.on('data', function(data){
+                console.log(data);
+                document.getElementById('sample').innerHTML = data; 
+            })
+        </script> -->
+
+    </body>
+</html>
